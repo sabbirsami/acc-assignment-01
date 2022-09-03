@@ -11,6 +11,15 @@ app.get("/user/all", (req, res) => {
     const users = JSON.parse(allUser);
     res.status(200).send(users);
 });
+
+app.get("/user/random", (req, res) => {
+    const allUser = fs.readFileSync("./userData.json");
+    const users = JSON.parse(allUser);
+    const totalUsers = users.length;
+    const randomNumber = Math.ceil(Math.random() * totalUsers);
+    const randomUser = users.filter((user) => user.id === randomNumber);
+    res.send(randomUser);
+});
 // app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
