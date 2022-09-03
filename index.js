@@ -28,6 +28,7 @@ app.post("/user/save", (req, res) => {
     const allUser = fs.readFileSync("./userData.json");
     const users = JSON.parse(allUser);
     users.push(newData);
+    console.log(users);
     res.status(200).send(users);
 });
 
