@@ -9,3 +9,5 @@ router
     .post((req, res) => {
         res.send("All user found");
     });
+
+module.exports = router;
