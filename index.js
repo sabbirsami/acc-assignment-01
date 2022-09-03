@@ -49,6 +49,16 @@ app.patch("user/update/:id", (req, res) => {
         res.status(404).send("User Not Found");
     }
 });
+
+app.delete("/user/delete/:id", (req, res) => {
+    const allUser = fs.readFileSync("./userData.json");
+    const users = JSON.parse(allUser);
+    const totalUsers = users.length;
+    const randomNumber = Math.ceil(Math.random() * totalUsers);
+    const randomUser = users.filter((user) => user.id === randomNumber);
+    res.send(randomUser);
+});
+
 // app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
