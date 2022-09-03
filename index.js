@@ -20,6 +20,14 @@ app.get("/user/random", (req, res) => {
     const randomUser = users.filter((user) => user.id === randomNumber);
     res.send(randomUser);
 });
+
+app.post("/user/save", (req, res) => {
+    const newData = req.body;
+    const allUser = fs.readFileSync("./userData.json");
+    const users = JSON.parse(allUser);
+    users.push(newData);
+    res.status(200).send(users);
+});
 // app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
