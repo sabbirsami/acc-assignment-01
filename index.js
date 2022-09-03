@@ -23,10 +23,31 @@ app.get("/user/random", (req, res) => {
 
 app.post("/user/save", (req, res) => {
     const newData = req.body;
+    // const { id, name, contact, address, gender, photoUrl } = newData;
+    console.log(id, name, contact, address, gender, photoUrl);
     const allUser = fs.readFileSync("./userData.json");
     const users = JSON.parse(allUser);
     users.push(newData);
     res.status(200).send(users);
+});
+
+app.patch("user/update/:id", (req, res) => {
+    const allUser = fs.readFileSync("./userData.json");
+    const users = JSON.parse(allUser);
+    const id = Number(req.params.id);
+    const updatedData = req.body;
+    // console.log(updatedData);
+    const index = users.findIndex((user) => user.id === id);
+    if (!index) {
+        if (index !== -1) {
+            const result = (users[index] = { ...users[index], ...updatedData });
+            // console.log(result);
+            fs.writeFileSync("./userData.json", JSON.stringify(users));
+            res.status(200).send(result);
+        }
+    } else {
+        res.status(404).send("User Not Found");
+    }
 });
 // app.use("/users", userRoutes);
 
